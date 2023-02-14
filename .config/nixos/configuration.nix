@@ -104,6 +104,9 @@ in {
       export _JAVA_AWT_WM_NONREPARENTING=1
       if ! test -f $HOME/.config/sway/config; then
         git -C $HOME reset --hard
+        if test -f $HOME/.bash_login; then
+          source $HOME/.bash_login
+        fi
         find $HOME/.ssh -type f -exec chmod u=rw,go= {} +
         home-manager switch
       fi

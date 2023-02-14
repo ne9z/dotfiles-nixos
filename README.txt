@@ -29,3 +29,16 @@ Usage
 Install NixOS as described in .config/nixos/inst.sh
 
 Reboot then login as normal user.  Execute "sway".
+
+After launching sway, you will see an empty screen with
+the default wallpaper.  Press and hold Super key (the
+logo key) on your keyboard to show status bar.  Press
+Super+Return to launch foot terminal emulator.  View all
+keybindings with:
+
+   e ~/.config/sway/config
+
+If you are new to Emacs, press Backspace, then press t
+to read Emacs tutorial.
+
+Launch Firefox with Super+z.

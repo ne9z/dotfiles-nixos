@@ -26,6 +26,14 @@ Features
 Usage
 ==================================================
 
+Download NixOS live media at
+
+  https://nixos.org/download.html#download-nixos
+
+then boot computer from the live media.
+
+Connect to the internet, then clone this repo to /root/
+
 Install NixOS as described in .config/nixos/inst.sh
 
 Reboot then login as normal user.  Default user name is

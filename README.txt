@@ -28,7 +28,11 @@ Usage
 
 Install NixOS as described in .config/nixos/inst.sh
 
-Reboot then login as normal user.  Execute "sway".
+Reboot then login as normal user. Configure network with
+
+  nmtui
+
+After establishing internet connection, execute "sway".
 
 After launching sway, you will see an empty screen with
 the default wallpaper.  Press and hold Super key (the

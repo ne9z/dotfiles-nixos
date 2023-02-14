@@ -14,8 +14,8 @@ in {
   programs.home-manager.enable = false;
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = (import /etc/nixos/configuration.nix).zfsRoot.myUser;
-  home.homeDirectory = "/home/${home.username}";
+  home.username = "user";
+  home.homeDirectory = "/home/${config.home.username}";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -68,6 +68,5 @@ in {
   programs = {
     mbsync.enable = true;
     msmtp.enable = true;
-    notmuch.enable = true;
   };
 }

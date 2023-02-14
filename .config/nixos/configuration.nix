@@ -322,8 +322,8 @@ in {
     createHome = true;
     uid = 1001;
     extraGroups = [ "wheel" "libvirtd" "networkmanager" ];
-    initialHashedPassword =
-      "$6$UxT9KYGGV6ik$BhH3Q.2F8x1llZQLUS1Gm4AxU7bmgZUP7pNX6Qt3qrdXUy7ZYByl5RVyKKMp/DuHZgk.RiiEXK8YVH.b2nuOO/";
+    initialPassword = "test";
+    #initialHashedPassword = "";
     packages = with pkgs; [
       gpxsee
       gnome.eog

@@ -33,12 +33,13 @@ Reboot then login as normal user.  Execute "sway".
 After launching sway, you will see an empty screen with
 the default wallpaper.  Press and hold Super key (the
 logo key) on your keyboard to show status bar.  Press
-Super+Return to launch foot terminal emulator.  View all
-keybindings with:
+Super+Return (press and hold Super, then press and
+release Return, then release Super) to launch foot
+terminal emulator.  View all keybindings with:
 
-   e ~/.config/sway/config
+   e ~/.config/sway/config # press return
 
-If you are new to Emacs, press Backspace, then press t
-to read Emacs tutorial.
+If you are new to Emacs, press and release Backspace,
+then press t to read Emacs tutorial.
 
 Launch Firefox with Super+z.

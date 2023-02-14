@@ -28,7 +28,10 @@ Usage
 
 Install NixOS as described in .config/nixos/inst.sh
 
-Reboot then login as normal user. Configure network with
+Reboot then login as normal user.  Default user name is
+"user" and password is "test".
+
+Configure network with
 
   nmtui
 

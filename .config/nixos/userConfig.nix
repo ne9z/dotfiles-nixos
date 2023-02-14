@@ -1,11 +1,9 @@
 { config, pkgs, ... }:
 let
-  myConfig.wlanNetworks = [
-    {
-      name = "name";
-      psk = "psk";
-    }
-  ];
+  myConfig.wlanNetworks = [{
+    name = "name";
+    psk = "psk";
+  }];
 in {
   programs.tmux = {
     enable = true;
@@ -351,8 +349,7 @@ in {
     };
   };
   networking = {
-    openconnect.interfaces = {
-    };
+    openconnect.interfaces = { };
     networkmanager = {
       enable = true;
       wifi = { macAddress = "random"; };

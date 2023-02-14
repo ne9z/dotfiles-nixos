@@ -34,7 +34,6 @@ in {
       emacs
     ];
 
-
   # List services that you want to enable:
   console.useXkbConfig = true;
   services.xserver.extraLayouts = { };
@@ -174,10 +173,14 @@ in {
   };
   environment.shellAliases = {
     e = "emacsclient --alternate-editor= --create-frame -nw";
-    Nsu = "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild switch --upgrade";
-    Nbu = "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild boot --upgrade";
-    Ns = "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild switch";
-    Nb = "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild boot";
+    Nsu =
+      "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild switch --upgrade";
+    Nbu =
+      "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild boot --upgrade";
+    Ns =
+      "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild switch";
+    Nb =
+      "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild boot";
     tm = "tmux attach-session";
   };
 
@@ -314,73 +317,75 @@ in {
     };
   }) zfsRoot.bootDevices));
 
-  users.users."${zfsRoot.myUser}".isNormalUser = true;
-  users.users."${zfsRoot.myUser}".createHome = true;
-  users.users."${zfsRoot.myUser}".uid = 1001;
-  users.users."${zfsRoot.myUser}".extraGroups = [ "wheel" "libvirtd" "networkmanager" ];
-  users.users."${zfsRoot.myUser}".initialHashedPassword =
-    "$6$UxT9KYGGV6ik$BhH3Q.2F8x1llZQLUS1Gm4AxU7bmgZUP7pNX6Qt3qrdXUy7ZYByl5RVyKKMp/DuHZgk.RiiEXK8YVH.b2nuOO/";
-  users.users."${zfsRoot.myUser}".packages = with pkgs; [
-    gpxsee
-    gnome.eog
-    yt-dlp
-    android-file-transfer
-    gnuplot_qt
-    auctex
-    zathura
-    s-tui
-    mpv
-    transmission-remote-gtk
-    virt-manager
-    sshfs
-    pdftk
-    ffmpeg
-    tor-browser-bundle-bin
-    wf-recorder
-    qrencode
-    xournalpp
-    xdg-utils
-    gnome.gnome-disk-utility
-    p7zip
-    zip
-    texlive.combined.scheme-medium
-    isync
-    notmuch
-    msmtp
-    mg
-    gnupg
-    pinentry-qt
-    emacs
-    git
-    home-manager
-    # passwords
-    pass
-    passExtensions.pass-otp
-    passExtensions.pass-import
-    cachix
-    nixfmt
-    tmux
-    (python310.withPackages (ps:
-      with ps; [
-        jedi
-        autopep8
-        yapf
-        black
-        click
-        flake8
-        mccabe
-        mypy-extensions
-        parso
-        pathspec
-        pip
-        platformdirs
-        pycodestyle
-        pyflakes
-        setuptools
-        tomli
-        numpy
-      ]))
-  ];
+  users.users."${zfsRoot.myUser}" = {
+    isNormalUser = true;
+    createHome = true;
+    uid = 1001;
+    extraGroups = [ "wheel" "libvirtd" "networkmanager" ];
+    initialHashedPassword =
+      "$6$UxT9KYGGV6ik$BhH3Q.2F8x1llZQLUS1Gm4AxU7bmgZUP7pNX6Qt3qrdXUy7ZYByl5RVyKKMp/DuHZgk.RiiEXK8YVH.b2nuOO/";
+    packages = with pkgs; [
+      gpxsee
+      gnome.eog
+      yt-dlp
+      android-file-transfer
+      gnuplot_qt
+      auctex
+      zathura
+      s-tui
+      mpv
+      transmission-remote-gtk
+      virt-manager
+      sshfs
+      pdftk
+      ffmpeg
+      tor-browser-bundle-bin
+      wf-recorder
+      qrencode
+      xournalpp
+      xdg-utils
+      gnome.gnome-disk-utility
+      p7zip
+      zip
+      texlive.combined.scheme-medium
+      isync
+      notmuch
+      msmtp
+      mg
+      gnupg
+      pinentry-qt
+      emacs
+      git
+      home-manager
+      # passwords
+      pass
+      passExtensions.pass-otp
+      passExtensions.pass-import
+      cachix
+      nixfmt
+      tmux
+      (python310.withPackages (ps:
+        with ps; [
+          jedi
+          autopep8
+          yapf
+          black
+          click
+          flake8
+          mccabe
+          mypy-extensions
+          parso
+          pathspec
+          pip
+          platformdirs
+          pycodestyle
+          pyflakes
+          setuptools
+          tomli
+          numpy
+        ]))
+    ];
+  };
 
   swapDevices = (map (diskName: {
     device = zfsRoot.devNodes + diskName + zfsRoot.partitionScheme.swap;

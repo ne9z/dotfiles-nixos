@@ -1,0 +1,22 @@
+
+[Default Applications]
+application/pdf=org.pwmt.zathura.desktop
+inode/directory=emacsclient.desktop
+text/plain=emacsclient.desktop
+text/org=emacsclient.desktop
+text/x-tex=emacsclient.desktop
+text/english=emacsclient.desktop
+text/x-makefile=emacsclient.desktop
+text/x-c++hdr=emacsclient.desktop
+text/x-c++src=emacsclient.desktop
+text/x-chdr=emacsclient.desktop
+text/x-csrc=emacsclient.desktop
+text/x-java=emacsclient.desktop
+text/x-moc=emacsclient.desktop
+text/x-pascal=emacsclient.desktop
+text/x-tcl=emacsclient.desktop
+application/x-shellscript=emacsclient.desktop
+text/x-c=emacsclient.desktop
+text/x-c++=emacsclient.desktop
+x-scheme-handler/mailto=emacsclient-mail.desktop
+image/jpeg=org.gnome.eog.desktop

@@ -1,0 +1,55 @@
+{
+    "layer": "bottom",
+    "ipc": true,
+    "id": "bar-0",
+    "position": "bottom",
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["wlr/taskbar"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "network",  "backlight", "battery", "clock"],
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "NOLOCK",
+            "deactivated": "LOCK"
+        }
+    },
+"pulseaudio": {
+    "format": "VOL {volume}%",
+    "format-muted": "MUTED",
+    "on-click": "amixer set Master toggle",
+},
+"network": {
+    "format": "{ifname}",
+    "format-wifi": "NET",
+    "format-ethernet": "{ipaddr}/{cidr}",
+    "format-disconnected": "", //An empty format will hide the module.
+    "tooltip-format": "{ifname} via {gwaddr}",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "{ifname}",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50
+},
+"backlight": {
+    "device": "intel_backlight",
+    "format": "BRI {percent}%",
+    "on-click": "brightnessctl set 100%",
+    "on-click-right": "brightnessctl set 1%",
+    "on-scroll-up": "brightnessctl set +1%",
+    "on-scroll-down": "brightnessctl set 1%-",
+},
+"wlr/taskbar": {
+    "format": "{name}",
+    "on-click": "activate",
+    "active-first": true
+},
+    "sway/workspaces": {
+        "enable-bar-scroll": true,
+	"disable-scroll-wraparound": true,
+    },
+    "battery": {
+        "format": "BAT {capacity}%",
+    },
+    "clock": {
+        "format-alt": "{:%a, %d. %b  %H:%M}"
+    }
+}

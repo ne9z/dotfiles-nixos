@@ -1,6 +1,8 @@
 find /dev/disk/by-id/
 DISK=/dev/disk/by-id/ata-TOSHIBA_Q300._46DB5111K1MU
 git clone https://github.com/ne9z/dotfiles-nixos.git
+mkdir dotfiles-nixos/Documents
+mkdir dotfiles-nixos/Downloads
 INST_PARTSIZE_SWAP=8
 diskNames=""
 for i in $DISK; do   diskNames="$diskNames \"${i##*/}\""; done

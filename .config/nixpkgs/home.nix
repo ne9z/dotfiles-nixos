@@ -60,9 +60,10 @@ in {
   services.emacs = {
     enable = true;
     socketActivation.enable = true;
+    extraOptions = [ "--no-window-system" ];
     client = {
       enable = true;
-      arguments = [ "--alternate-editor= --create-frame" ];
+      arguments = [ "--alternate-editor= --create-frame -nw" ];
     };
   };
   programs = {

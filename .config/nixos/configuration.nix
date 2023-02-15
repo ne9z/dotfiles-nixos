@@ -346,7 +346,6 @@ in {
       mpv
       transmission-remote-gtk
       virt-manager
-      sshfs
       pdftk
       ffmpeg
       tor-browser-bundle-bin
@@ -354,16 +353,14 @@ in {
       qrencode
       xournalpp
       xdg-utils
-      gnome.gnome-disk-utility
       p7zip
       zip
       texlive.combined.scheme-medium
       isync
       notmuch
       msmtp
-      mg
       gnupg
-      pinentry-qt
+      pinentry-curses
       emacs
       git
       home-manager
@@ -371,29 +368,7 @@ in {
       pass
       passExtensions.pass-otp
       passExtensions.pass-import
-      cachix
       nixfmt
-      tmux
-      (python310.withPackages (ps:
-        with ps; [
-          jedi
-          autopep8
-          yapf
-          black
-          click
-          flake8
-          mccabe
-          mypy-extensions
-          parso
-          pathspec
-          pip
-          platformdirs
-          pycodestyle
-          pyflakes
-          setuptools
-          tomli
-          numpy
-        ]))
     ];
   };
 

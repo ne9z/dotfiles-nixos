@@ -328,23 +328,19 @@ in {
         id=eduroam
         type=wifi
 
+        [wifi]
+        mode=infrastructure
+        ssid=eduroam
+
         [wifi-security]
         auth-alg=open
         key-mgmt=wpa-eap
 
-        [wifi]
-        ssid=eduroam
-        mode=infrastructure
-        security=802-11-wireless-security
-
         [802-1x]
-        eap=peap
-        identity=
-        phase2-auth=mschapv2
+        eap=peap;
+        identity=user@tu-berlin.de
         password=
-        domain-suffix-match=
-        anonymous-identity=
-        ca-path=
+        phase2-auth=mschapv2
       '';
     };
   };

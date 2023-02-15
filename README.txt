@@ -58,3 +58,51 @@ If you are new to Emacs, press and release Backspace,
 then press t to read Emacs tutorial.
 
 Launch Firefox with Super+z.
+
+Appendix: Connecting to a network with Captive Portal
+==================================================
+
+Sometimes we might need to connect to a public wireless
+network with captive portal: the user is either required
+to enter credentials or agreeing to a Usage Agreement
+before internet access is granted.  The method is
+usually hijacking HTTP requests or DNS requests to
+redirect to the captive portal page.
+
+Problem: the config documented in this repo enables
+HTTPS-only mode for Firefox and DNS-over-TLS is enforced
+by the local stubby DNS resolver.  We need to
+temporarily workaround these security measures in order
+to access captive portal page.
+
+Step 1.
+Connect to a public WiFi network using `nmtui'
+
+Step 2.
+Show the default DNS server on this public network, with
+
+    nmcli connection show _SSID_NAME_ | grep IP4
+    # output
+    IP4.DNS[1]:      130.149.7.7
+    IP4.DNS[2]:      192.129.31.50
+
+
+Step 3.
+Prepend one of the default DNS servers to
+/etc/resolv.conf:
+
+    nano /etc/resolv.conf
+    # add to the beginning of this file
+    nameserver 130.149.7.7
+    # redirect DNS query to stubby
+    nameserver ::1
+
+Step 4.
+Launch Firefox and visit:
+
+    http://detectportal.firefox.com/canonical.html
+
+You should be automatically redirected to the Captive
+Portal page provided by the public network.  Follow
+on-screen instructions to continue.  Enable JavaScript
+if necessary. 

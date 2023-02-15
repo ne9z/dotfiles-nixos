@@ -36,8 +36,14 @@ in {
 
   # List services that you want to enable:
   console.useXkbConfig = true;
-  services.xserver.extraLayouts = { };
-  services.xserver.exportConfiguration = true;
+  services.xserver.extraLayouts = {
+    "${zfsRoot.myUser}" = {
+      description = "${zfsRoot.myUser} layout.";
+      languages = [ "eng" ];
+      symbolsFile = ./keymap/symbols;
+    };
+  };
+  services.xserver.layout = "${zfsRoot.myUser}";
 
   # Enable the OpenSSH daemon.
   virtualisation.libvirtd = {
@@ -88,6 +94,7 @@ in {
   };
 
   environment.variables = {
+    XKB_DEFAULT_LAYOUT = "${zfsRoot.myUser}";
     EDITOR = "emacsclient --alternate-editor= --create-frame -nw";
   };
 

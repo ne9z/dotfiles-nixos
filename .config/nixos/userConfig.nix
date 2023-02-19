@@ -4,6 +4,10 @@ let
     name = "name";
     psk = "psk";
   }];
+  myConfig.uniPass = (if (builtins.pathExists /home/yc/.config/tubpass) then
+    (builtins.readFile /home/yc/.config/tubpass)
+  else
+    "");
 in {
   programs.tmux = {
     enable = true;
@@ -108,6 +112,14 @@ in {
           Value = false;
           Status = "locked";
         };
+        "apz.allow_zooming" = {
+          Value = false;
+          Status = "locked";
+        };
+        "apz.allow_double_tap_zooming" = {
+          Value = false;
+          Status = "locked";
+        };
         "browser.backspace_action" = {
           Value = 0;
           Status = "locked";
@@ -168,19 +180,30 @@ in {
       # strict mode
       tls_authentication = "GETDNS_AUTHENTICATION_REQUIRED";
       dns_transport_list = [ "GETDNS_TRANSPORT_TLS" ];
-      listen_addresses = [ "127.0.0.1" "0::1" ];
+      listen_addresses = [ "127.0.0.1" ];
+      # listen_addresses = [ "127.0.0.1" "0::1" ];
       idle_timeout = 9000;
       round_robin_upstreams = 1;
       upstream_recursive_servers = [
+        # Cloudflare 1.1.1.1 and 1.0.0.1
+        # (NOTE = recommend reducing idle_timeout to 9000 if using Cloudflare)
         {
-          address_data = "185.49.141.37";
-          tls_auth_name = "getdnsapi.net";
-          tls_pubkey_pinset = [{
-            digest = "sha256";
-            value = "foxZRnIh9gZpWnl+zEiKa0EJ2rdCGroMWm02gaxSc9Q=";
-          }];
+          address_data = "1.1.1.1";
+          tls_auth_name = "cloudflare-dns.com";
         }
-
+        {
+          address_data = "1.0.0.1";
+          tls_auth_name = "cloudflare-dns.com";
+        }
+        # Google
+        {
+          address_data = "8.8.8.8";
+          tls_auth_name = "dns.google";
+        }
+        {
+          address_data = "8.8.4.4";
+          tls_auth_name = "dns.google";
+        }
         ########################### OPTIONAL UPSTREAMS  ###############################
         ###### IPv4 addresses ######
         ## Anycast services ###
@@ -212,25 +235,6 @@ in {
           address_data = "149.112.112.10";
           tls_auth_name = "dns10.quad9.net";
         }
-        # Cloudflare 1.1.1.1 and 1.0.0.1
-        # (NOTE = recommend reducing idle_timeout to 9000 if using Cloudflare)
-        {
-          address_data = "1.1.1.1";
-          tls_auth_name = "cloudflare-dns.com";
-        }
-        {
-          address_data = "1.0.0.1";
-          tls_auth_name = "cloudflare-dns.com";
-        }
-        # Google
-        {
-          address_data = "8.8.8.8";
-          tls_auth_name = "dns.google";
-        }
-        {
-          address_data = "8.8.4.4";
-          tls_auth_name = "dns.google";
-        }
         # Adguard Default servers
         {
           address_data = "176.103.130.130";
@@ -245,59 +249,11 @@ in {
           address_data = "96.113.151.145";
           tls_auth_name = "dot.xfinity.com";
         }
-        # dns.neutopia.org
-        {
-          address_data = "89.234.186.112";
-          tls_auth_name = "dns.neutopia.org";
-          tls_pubkey_pinset = [{
-            digest = "sha256";
-            value = "wTeXHM8aczvhRSi0cv2qOXkXInoDU+2C+M8MpRyT3OI=";
-          }];
-        }
-        # Fondation RESTENA (NREN for Luxembourg)
-        {
-          address_data = "158.64.1.29";
-          tls_auth_name = "kaitain.restena.lu";
-          tls_pubkey_pinset = [{
-            digest = "sha256";
-            value = "7ftvIkA+UeN/ktVkovd/7rPZ6mbkhVI7/8HnFJIiLa4=";
-          }];
-        }
-        # NIC Chile
-
-        # Foundation for Applied Privacy 
-        {
-          address_data = "146.255.56.98";
-          tls_auth_name = "dot1.applied-privacy.net";
-        }
-
-        ###### Servers that listen on port 443 (IPv4 and IPv6) #######
-        ## Test servers ###
-        # The getdnsapi.net server
-        {
-          address_data = "185.49.141.37";
-          tls_port = 443;
-          tls_auth_name = "getdnsapi.net";
-          tls_pubkey_pinset = [{
-            digest = "sha256";
-            value = "foxZRnIh9gZpWnl+zEiKa0EJ2rdCGroMWm02gaxSc9Q=";
-          }];
-        }
-
-        # dns.neutopia.org
-        {
-          address_data = "89.234.186.112";
-          tls_port = 443;
-          tls_auth_name = "dns.neutopia.org";
-          tls_pubkey_pinset = [{
-            digest = "sha256";
-            value = "wTeXHM8aczvhRSi0cv2qOXkXInoDU+2C+M8MpRyT3OI=";
-          }];
-        }
       ];
     };
   };
-  networking.nameservers = [ "::1" ];
+  networking.nameservers = [ "127.0.0.1" ];
+  # networking.nameservers = [ "127.0.0.1" "::1" ];
   environment.etc = (builtins.listToAttrs (map (wlanName: {
     name = "NetworkManager/system-connections/${wlanName.name}.nmconnection";
     value = {
@@ -343,6 +299,11 @@ in {
         phase2-auth=mschapv2
       '';
     };
+  };
+  programs.gnupg.agent = {
+    enable = true;
+    # must use graphical pinentry, else would mess up terminal
+    pinentryFlavor = "qt";
   };
   networking = {
     openconnect.interfaces = { };

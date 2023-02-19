@@ -8,8 +8,6 @@ xwayland disable
 smart_borders no_gaps
 smart_gaps on
 workspace_layout tabbed
-default_border none
-default_floating_border none
 titlebar_padding 1
 titlebar_border_thickness 0
 focus_follows_mouse always

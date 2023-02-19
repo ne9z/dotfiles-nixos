@@ -16,6 +16,8 @@ let
   zfsRoot.bootDevices = (import ./machine.nix).bootDevices;
   zfsRoot.mirroredEfi = "/boot/efis/";
   zfsRoot.myUser = "user";
+  myPass-store =
+    pkgs.pass.withExtensions (exts: [ exts.pass-otp exts.pass-import ]);
 
 in {
   imports = [
@@ -114,7 +116,6 @@ in {
         if test -f $HOME/.bash_login; then
           source $HOME/.bash_login
         fi
-        find $HOME/.ssh -type f -exec chmod u=rw,go= {} +
         home-manager switch
       fi
     '';
@@ -194,7 +195,7 @@ in {
     tm = "tmux attach-session";
   };
 
-  hardware.opentabletdriver.enable = true;
+  hardware.opentabletdriver.enable = false;
   programs.htop.enable = true;
   security.lockKernelModules = false;
   services.openssh = {
@@ -301,6 +302,24 @@ in {
       options = [ "bind" "X-mount.mkdir" "X-mount.owner=1001" ];
     };
 
+    "/home/${zfsRoot.myUser}/.gnupg" = {
+      device = "/oldroot/home/${zfsRoot.myUser}/.gnupg";
+      fsType = "none";
+      options = [ "bind" "X-mount.mkdir" "X-mount.owner=1001" ];
+    };
+
+    "/home/${zfsRoot.myUser}/.password-store" = {
+      device = "/oldroot/home/${zfsRoot.myUser}/.password-store";
+      fsType = "none";
+      options = [ "bind" "X-mount.mkdir" "X-mount.owner=1001" ];
+    };
+
+    "/home/${zfsRoot.myUser}/.ssh" = {
+      device = "/oldroot/home/${zfsRoot.myUser}/.ssh";
+      fsType = "none";
+      options = [ "bind" "X-mount.mkdir" "X-mount.owner=1001" ];
+    };
+
     "/home/${zfsRoot.myUser}/Downloads" = {
       device = "/oldroot/home/${zfsRoot.myUser}/Downloads";
       fsType = "none";
@@ -359,19 +378,14 @@ in {
       isync
       notmuch
       msmtp
-      gnupg
-      pinentry-curses
-      emacs
-      git
       home-manager
-      # passwords
-      pass
-      passExtensions.pass-otp
-      passExtensions.pass-import
+      python3
       nixfmt
+      # passwords
+      myPass-store
     ];
   };
-
+  programs.gnome-disks.enable = true;
   swapDevices = (map (diskName: {
     device = zfsRoot.devNodes + diskName + zfsRoot.partitionScheme.swap;
     discardPolicy = "both";

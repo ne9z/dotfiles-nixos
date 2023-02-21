@@ -104,7 +104,8 @@ for i in ${DISK}; do
 done
 
 mv dotfiles-nixos /mnt/home/user
-cp -r /mnt/home/user/.config/nixos/ /mnt/etc/
+mkdir -p /mnt/etc
+cp -r /mnt/home/user/.config/nixos /mnt/etc/nixos
 chown -R 1001:100 /mnt/home/user/
 history -w /mnt/home/user/.config/nixos/inst.sh
 nixos-install --no-root-passwd --root /mnt

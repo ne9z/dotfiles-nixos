@@ -36,8 +36,9 @@ Connect to the internet, then clone this repo to /root/
 
 Install NixOS as described in .config/nixos/inst.sh
 
-Reboot then login as normal user.  Default user name is
-"user" and password is "test".
+Reboot then login as normal user.  Default encryption
+password is "poolpass", user name is "user" and password
+is "test".
 
 Configure network with
 

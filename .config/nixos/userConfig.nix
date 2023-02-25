@@ -171,89 +171,107 @@ in {
       };
     };
   };
-  services.stubby = {
+  services.dnscrypt-proxy2 = {
     enable = true;
     settings = {
-      # update tls dns servers
-      # https://raw.githubusercontent.com/getdnsapi/stubby/master/stubby.yml.example
-      resolution_type = "GETDNS_RESOLUTION_STUB";
-      # strict mode
-      tls_authentication = "GETDNS_AUTHENTICATION_REQUIRED";
-      dns_transport_list = [ "GETDNS_TRANSPORT_TLS" ];
-      listen_addresses = [ "127.0.0.1" ];
-      # listen_addresses = [ "127.0.0.1" "0::1" ];
-      idle_timeout = 9000;
-      round_robin_upstreams = 1;
-      upstream_recursive_servers = [
-        # Cloudflare 1.1.1.1 and 1.0.0.1
-        # (NOTE = recommend reducing idle_timeout to 9000 if using Cloudflare)
-        {
-          address_data = "1.1.1.1";
-          tls_auth_name = "cloudflare-dns.com";
-        }
-        {
-          address_data = "1.0.0.1";
-          tls_auth_name = "cloudflare-dns.com";
-        }
-        # Google
-        {
-          address_data = "8.8.8.8";
-          tls_auth_name = "dns.google";
-        }
-        {
-          address_data = "8.8.4.4";
-          tls_auth_name = "dns.google";
-        }
-        ########################### OPTIONAL UPSTREAMS  ###############################
-        ###### IPv4 addresses ######
-        ## Anycast services ###
-        # Quad 9 'secure' service - Filters, does DNSSEC, doesn't send ECS
-        {
-          address_data = "9.9.9.9";
-          tls_auth_name = "dns.quad9.net";
-        }
-        {
-          address_data = "149.112.112.112";
-          tls_auth_name = "dns.quad9.net";
-        }
-        # Quad 9 'secure w/ECS' service - Filters, does DNSSEC, DOES send ECS
-        # See the entry for `edns_client_subnet_private` for more details on ECS
-        {
-          address_data = "9.9.9.11";
-          tls_auth_name = "dns11.quad9.net";
-        }
-        {
-          address_data = "149.112.112.11";
-          tls_auth_name = "dns11.quad9.net";
-        }
-        # Quad 9 'insecure' service - No filtering, no DNSSEC, doesn't send ECS
-        {
-          address_data = "9.9.9.10";
-          tls_auth_name = "dns10.quad9.net";
-        }
-        {
-          address_data = "149.112.112.10";
-          tls_auth_name = "dns10.quad9.net";
-        }
-        # Adguard Default servers
-        {
-          address_data = "176.103.130.130";
-          tls_auth_name = "dns.adguard.com";
-        }
-        {
-          address_data = "176.103.130.131";
-          tls_auth_name = "dns.adguard.com";
-        }
-        # Comcast
-        {
-          address_data = "96.113.151.145";
-          tls_auth_name = "dot.xfinity.com";
-        }
+      listen_addresses = [ "127.0.0.1:53" "[::1]:53" ];
+      max_clients = 250;
+      # https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v3/public-resolvers.md
+      server_names = [
+        "dns0"
+        "scaleway-fr"
+        "google"
+        "google-ipv6"
+        "cloudflare"
+        "dct-de1"
+        "dns.digitalsize.net"
+        "dns.digitalsize.net-ipv6"
+        "dns.watch"
+        "dns.watch-ipv6"
+        "dnscrypt-de-blahdns-ipv4"
+        "dnscrypt-de-blahdns-ipv6"
+        "doh.ffmuc.net"
+        "doh.ffmuc.net-v6"
+        "he"
+        "dnsforge.de"
+        "bortzmeyer"
+        "bortzmeyer-ipv6"
+        "circl-doh"
+        "circl-doh-ipv6"
+        "cloudflare-ipv6"
+        "dns.digitale-gesellschaft.ch-ipv6"
+        "dns.digitale-gesellschaft.ch"
+      ];
+      ipv4_servers = true;
+      ipv6_servers = false;
+      dnscrypt_servers = true;
+      doh_servers = true;
+      odoh_servers = false;
+      require_dnssec = false;
+      require_nolog = true;
+      require_nofilter = true;
+      disabled_server_names = [ ];
+      force_tcp = false;
+      http3 = false;
+      timeout = 5000;
+      keepalive = 30;
+      cert_refresh_delay = 240;
+      bootstrap_resolvers = [ "9.9.9.11:53" "8.8.8.8:53" ];
+      ignore_system_dns = true;
+      netprobe_timeout = 60;
+      netprobe_address = "9.9.9.9:53";
+      log_files_max_size = 10;
+      log_files_max_age = 7;
+      log_files_max_backups = 1;
+      block_ipv6 = false;
+      block_unqualified = true;
+      block_undelegated = true;
+      reject_ttl = 10;
+      cache = true;
+      cache_size = 4096;
+      cache_min_ttl = 2400;
+      cache_max_ttl = 86400;
+      cache_neg_min_ttl = 60;
+      cache_neg_max_ttl = 600;
+      sources.public-resolvers = {
+        urls = [
+          "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md"
+          "https://ipv6.download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
+        ];
+        cache_file = "public-resolvers.md";
+        minisign_key =
+          "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+        refresh_delay = 72;
+      };
+      sources.relays = {
+        urls = [
+          "https://download.dnscrypt.info/resolvers-list/v3/relays.md"
+          "https://ipv6.download.dnscrypt.info/resolvers-list/v3/relays.md"
+        ];
+        cache_file = "relays.md";
+        minisign_key =
+          "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+        refresh_delay = 72;
+      };
+      query_log.file = "query.log";
+      query_log.format = "tsv";
+      anonymized_dns.skip_incompatible = false;
+      broken_implementations.fragments_blocked = [
+        "cisco"
+        "cisco-ipv6"
+        "cisco-familyshield"
+        "cisco-familyshield-ipv6"
+        "cleanbrowsing-adult"
+        "cleanbrowsing-adult-ipv6"
+        "cleanbrowsing-family"
+        "cleanbrowsing-family-ipv6"
+        "cleanbrowsing-security"
+        "cleanbrowsing-security-ipv6"
       ];
     };
+    upstreamDefaults = false;
   };
-  networking.nameservers = [ "127.0.0.1" ];
-  # networking.nameservers = [ "127.0.0.1" "::1" ];
+  networking.nameservers = [ "::1" ];
   environment.etc = (builtins.listToAttrs (map (wlanName: {
     name = "NetworkManager/system-connections/${wlanName.name}.nmconnection";
     value = {

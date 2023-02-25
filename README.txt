@@ -20,7 +20,7 @@ Features
 - Wayland screen sharing with Firefox and WebRTC
 - WiFi declaratively managed by NetworkManager
 - tmux terminal multiplexer enabled for terminal emulators
-- stubby DNS resolver for better privacy
+- dnscrypt2-proxy DNS resolver for better privacy
 - i2pd, yggdrasil for an open Internet
 
 Usage
@@ -72,7 +72,7 @@ redirect to the captive portal page.
 
 Problem: the config documented in this repo enables
 HTTPS-only mode for Firefox and DNS-over-TLS is enforced
-by the local stubby DNS resolver.  We need to
+by the local dnscrypt2-proxy DNS resolver.  We need to
 temporarily workaround these security measures in order
 to access captive portal page.
 
@@ -95,7 +95,7 @@ Prepend one of the default DNS servers to
     nano /etc/resolv.conf
     # add to the beginning of this file
     nameserver 130.149.7.7
-    # redirect DNS query to stubby
+    # redirect DNS query to dnscrypt2-proxy
     nameserver ::1
 
 Step 4.

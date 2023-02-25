@@ -347,6 +347,7 @@ in {
   }) zfsRoot.bootDevices));
 
   users.users."${zfsRoot.myUser}" = {
+    description = "given-name family-name";
     isNormalUser = true;
     createHome = true;
     uid = 1001;

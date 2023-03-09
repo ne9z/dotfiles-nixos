@@ -53,6 +53,7 @@ input "type:touchpad" {
 }
 input "1149:8257:Kensington_Kensington_Slimblade_Trackball" {
    pointer_accel 1
+   left_handed enabled
 }
 
 

@@ -110,72 +110,6 @@ in {
         WhatsNew = false;
         SkipOnboarding = true;
       };
-      Preferences = {
-        "privacy.resistFingerprinting" = {
-          Value = true;
-          Status = "locked";
-        };
-        "webgl.min_capability_mode" = {
-          Value = true;
-          Status = "locked";
-        };
-        "apz.gtk.touchpad_pinch.enabled" = {
-          Value = false;
-          Status = "locked";
-        };
-        "apz.allow_zooming" = {
-          Value = false;
-          Status = "locked";
-        };
-        "apz.allow_double_tap_zooming" = {
-          Value = false;
-          Status = "locked";
-        };
-        "browser.backspace_action" = {
-          Value = 0;
-          Status = "locked";
-        };
-        "browser.display.use_document_fonts" = {
-          Value = 0;
-          Status = "locked";
-        };
-        "browser.uidensity" = {
-          Value = 1;
-          Status = "locked";
-        };
-        "dom.security.https_only_mode" = {
-          Value = true;
-          Status = "locked";
-        };
-        "general.smoothScroll" = {
-          Value = false;
-          Status = "locked";
-        };
-        "media.ffmpeg.vaapi.enabled" = {
-          Value = true;
-          Status = "locked";
-        };
-        "media.ffmpeg.low-latency.enabled" = {
-          Value = true;
-          Status = "locked";
-        };
-        "media.navigator.mediadatadecoder_vpx_enabled" = {
-          Value = true;
-          Status = "locked";
-        };
-        "browser.chrome.site_icons" = {
-          Value = false;
-          Status = "locked";
-        };
-        "browser.tabs.firefox-view" = {
-          Value = false;
-          Status = "locked";
-        };
-        "browser.contentblocking.category" = {
-          Value = "strict";
-          Status = "locked";
-        };
-      };
     };
   };
   services.dnscrypt-proxy2 = {
@@ -344,9 +278,9 @@ in {
       #curl https://publicpeers.neilalexander.dev/ | grep "<td id='status'>online</td><td id='reliability'>reliable</td>" | sed "s|</td><td id='version'>.*|\"|" | sed "s|<td id='address'>|\"|" > peers
       "tls://192.99.145.61:58226"
       "tls://[2607:5300:201:3100::50a1]:58226"
+      "tls://[2a01:4f9:2a:60c::2]:18836"
       "tls://95.216.5.243:18836"
       "tls://[2a01:4f9:6a:49e7:1068:cf52:a4aa:1]:8443?key=9d0bdac2e339fd57bcc9af5c4d5f2ecd98e724d32d56c239a5cdec580ab0a580"
-      "tls://[2a01:4f9:2a:60c::2]:18836"
       "tls://94.23.116.184:1944?key=9d0bdac2e339fd57bcc9af5c4d5f2ecd98e724d32d56c239a5cdec580ab0a580"
       "tls://[2a01:4f9:c010:664d::1]:61995"
       "tls://65.21.57.122:61995"
@@ -357,28 +291,28 @@ in {
       "tls://[2001:41d0:304:200::ace3]:23108"
       "tls://[2001:41d0:2:c44a:51:255:223:60]:54232"
       "tcp://193.107.20.230:7743"
-      "tls://[2a01:4f8:13a:19e5:103a:263e:890c:1]:8443?key=4308ccec1a3a9c68c4f376000cf9c7084c1daae4921eb123cd93b6eb96fd8d84"
       "tls://94.23.116.184:1945?key=4308ccec1a3a9c68c4f376000cf9c7084c1daae4921eb123cd93b6eb96fd8d84"
+      "tls://[2a01:4f8:13a:19e5:103a:263e:890c:1]:8443?key=4308ccec1a3a9c68c4f376000cf9c7084c1daae4921eb123cd93b6eb96fd8d84"
       "tls://23.137.249.65:443"
       "tls://94.103.82.150:8080"
       "tls://54.37.137.221:11129"
       "tls://[2a03:cfc0:8004::000b:0cf2]:8443?key=4696a1466c69110dfa6060a0be368b1049f1463906a75b815967efa6d374226e"
       "tls://185.165.169.234:8443"
       "tcp://185.165.169.234:8880"
-      "tcp://45.147.200.202:12402"
       "tcp://77.37.218.131:12402"
-      "tcp://[2a09:5302:ffff::992]:12403"
-      "tcp://45.95.202.21:12403"
       "tcp://[2a00:b700::a:279]:12402"
-      "tls://[2a09:5302:ffff::992]:443"
-      "tls://45.147.200.202:443"
-      "tls://77.37.218.131:443"
-      "tls://45.95.202.21:443"
+      "tcp://45.95.202.21:12403"
+      "tcp://45.147.200.202:12402"
+      "tcp://[2a09:5302:ffff::992]:12403"
       "tls://[2a00:b700::a:279]:443"
+      "tls://45.95.202.21:443"
+      "tls://[2a09:5302:ffff::992]:443"
+      "tls://77.37.218.131:443"
+      "tls://45.147.200.202:443"
       "tls://45.95.202.91:65535"
       "tls://[2a09:5302:ffff::aca]:65535"
-      "tls://[2a09:5302:ffff::ac9]:65535"
       "tls://185.103.109.63:65535"
+      "tls://[2a09:5302:ffff::ac9]:65535"
       "tls://158.101.229.219:17001"
       "tcp://158.101.229.219:17002"
       "tcp://[2603:c023:8001:1600:35e0:acde:2c6e:b27f]:17002"

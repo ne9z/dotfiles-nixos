@@ -123,8 +123,8 @@ set $right f
     floating_modifier $mod normal
 
     bindsym $mod+z exec $firefox
-    bindsym $mod+o exec xournalpp
-    #bindsym $mod+g exec xournalpp
+    bindsym $mod+o exec $emacs
+    bindsym $mod+x exec xournalpp
 
     bindsym $mod+Shift+l exec systemctl suspend
 ######################################################################
@@ -416,3 +416,4 @@ bar bar-0 {
 }
 
 include /etc/sway/config.d/*
+include $HOME/.config/sway/$(hostname)

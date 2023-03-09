@@ -9,6 +9,17 @@ let
   else
     "");
 in {
+
+  nix = {
+    settings = {
+      substituters =
+        [ "https://nix-community.cachix.org" "https://cache.nixos.org/" ];
+      trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+  };
+
   programs.tmux = {
     enable = true;
     keyMode = "emacs";
@@ -25,7 +36,7 @@ in {
   };
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox;
+    package = pkgs.firefox-esr;
     policies = {
       "3rdparty" = {
         Extensions = {
@@ -142,10 +153,6 @@ in {
         };
         "media.ffmpeg.vaapi.enabled" = {
           Value = true;
-          Status = "locked";
-        };
-        "media.ffvpx.enabled" = {
-          Value = false;
           Status = "locked";
         };
         "media.ffmpeg.low-latency.enabled" = {
@@ -336,97 +343,58 @@ in {
     settings.Peers = [
       #curl https://publicpeers.neilalexander.dev/ | grep "<td id='status'>online</td><td id='reliability'>reliable</td>" | sed "s|</td><td id='version'>.*|\"|" | sed "s|<td id='address'>|\"|" > peers
       "tls://192.99.145.61:58226"
-      "tls://ca1.servers.devices.cwinfo.net:58226"
-      "tcp://kusoneko.moe:9002"
       "tls://[2607:5300:201:3100::50a1]:58226"
+      "tls://95.216.5.243:18836"
       "tls://[2a01:4f9:6a:49e7:1068:cf52:a4aa:1]:8443?key=9d0bdac2e339fd57bcc9af5c4d5f2ecd98e724d32d56c239a5cdec580ab0a580"
       "tls://[2a01:4f9:2a:60c::2]:18836"
-      "tls://95.216.5.243:18836"
       "tls://94.23.116.184:1944?key=9d0bdac2e339fd57bcc9af5c4d5f2ecd98e724d32d56c239a5cdec580ab0a580"
-      "tls://aurora.devices.waren.io:18836"
       "tls://[2a01:4f9:c010:664d::1]:61995"
       "tls://65.21.57.122:61995"
-      "tls://fi1.servers.devices.cwinfo.net:61995"
-      "tls://51.15.204.214:54321"
       "tls://152.228.216.112:23108"
-      "tls://fr2.servers.devices.cwinfo.net:23108"
+      "tls://51.15.204.214:54321"
       "tcp://51.15.204.214:12345"
-      "tls://163.172.31.60:12221?key=060f2d49c6a1a2066357ea06e58f5cff8c76a5c0cc513ceb2dab75c900fe183b&sni=jorropo.net"
       "tls://51.255.223.60:54232"
-      "tls://cloudberry.fr1.servers.devices.cwinfo.net:54232"
       "tls://[2001:41d0:304:200::ace3]:23108"
       "tls://[2001:41d0:2:c44a:51:255:223:60]:54232"
       "tcp://193.107.20.230:7743"
-      "tcp://yggdrasil.su:62486"
-      "tls://yggdrasil.su:62586"
-      "tls://vpn.ltha.de:443?key=0000006149970f245e6cec43664bce203f2514b60a153e194f31e2b229a1339d"
-      "tcp://gutsche.tech:8888"
-      "tls://gutsche.tech:8889"
       "tls://[2a01:4f8:13a:19e5:103a:263e:890c:1]:8443?key=4308ccec1a3a9c68c4f376000cf9c7084c1daae4921eb123cd93b6eb96fd8d84"
       "tls://94.23.116.184:1945?key=4308ccec1a3a9c68c4f376000cf9c7084c1daae4921eb123cd93b6eb96fd8d84"
-      "tls://de-fsn-1.peer.v4.yggdrasil.chaz6.com:4444"
-      "tcp://ygg.mkg20001.io:80"
-      "tls://ygg.mkg20001.io:443"
-      "tcp://ygg2.mk16.de:1337?key=000000d80a2d7b3126ea65c8c08fc751088c491a5cdd47eff11c86fa1e4644ae"
-      "tls://ygg2.mk16.de:1338?key=000000d80a2d7b3126ea65c8c08fc751088c491a5cdd47eff11c86fa1e4644ae"
       "tls://23.137.249.65:443"
-      "tcp://ygg-nl.incognet.io:8883"
-      "tls://ygg-nl.incognet.io:8884"
       "tls://94.103.82.150:8080"
       "tls://54.37.137.221:11129"
       "tls://[2a03:cfc0:8004::000b:0cf2]:8443?key=4696a1466c69110dfa6060a0be368b1049f1463906a75b815967efa6d374226e"
-      "tls://pl1.servers.devices.cwinfo.net:11129"
       "tls://185.165.169.234:8443"
       "tcp://185.165.169.234:8880"
-      "tcp://itcom.multed.com:7991"
-      "tls://ygg.tomasgl.ru:61944?key=c5e0c28a600c2118e986196a0bbcbda4934d8e9278ceabea48838dc5d8fae576"
-      "tcp://ygg.tomasgl.ru:61933?key=c5e0c28a600c2118e986196a0bbcbda4934d8e9278ceabea48838dc5d8fae576"
-      "tcp://box.paulll.cc:13337"
-      "tls://box.paulll.cc:13338"
-      "tcp://srv.itrus.su:7991"
-      "tcp://158.101.229.219:17002"
+      "tcp://45.147.200.202:12402"
+      "tcp://77.37.218.131:12402"
+      "tcp://[2a09:5302:ffff::992]:12403"
+      "tcp://45.95.202.21:12403"
+      "tcp://[2a00:b700::a:279]:12402"
+      "tls://[2a09:5302:ffff::992]:443"
+      "tls://45.147.200.202:443"
+      "tls://77.37.218.131:443"
+      "tls://45.95.202.21:443"
+      "tls://[2a00:b700::a:279]:443"
+      "tls://45.95.202.91:65535"
+      "tls://[2a09:5302:ffff::aca]:65535"
+      "tls://[2a09:5302:ffff::ac9]:65535"
+      "tls://185.103.109.63:65535"
       "tls://158.101.229.219:17001"
+      "tcp://158.101.229.219:17002"
       "tcp://[2603:c023:8001:1600:35e0:acde:2c6e:b27f]:17002"
       "tls://[2603:c023:8001:1600:35e0:acde:2c6e:b27f]:17001"
-      "tcp://sin.yuetau.net:6642"
-      "tls://sin.yuetau.net:6643"
-      "tcp://ygg.ace.ctrl-c.liu.se:9998?key=5636b3af4738c3998284c4805d91209cab38921159c66a6f359f3f692af1c908"
-      "tls://ygg.ace.ctrl-c.liu.se:9999?key=5636b3af4738c3998284c4805d91209cab38921159c66a6f359f3f692af1c908"
       "tls://185.130.44.194:7040"
       "tls://[2a07:e01:105:444:c634:6bff:feb5:6e28]:7040"
       "tcp://193.111.114.28:8080"
       "tls://193.111.114.28:1443"
-      "tls://51.38.64.12:28395"
       "tls://185.175.90.87:43006"
-      "tcp://curiosity.tdjs.tech:30003"
+      "tls://51.38.64.12:28395"
       "tls://[2a10:4740:40:0:2222:3f9c:b7cf:1]:43006"
-      "tls://uk1.servers.devices.cwinfo.net:28395"
-      "tcp://0.ygg.l1qu1d.net:11100?key=0000000998b5ff8c0f1115ce9212f772d0427151f50fe858e6de1d22600f1680"
-      "tls://0.ygg.l1qu1d.net:11101?key=0000000998b5ff8c0f1115ce9212f772d0427151f50fe858e6de1d22600f1680"
-      "tcp://longseason.1200bps.xyz:13121"
-      "tls://longseason.1200bps.xyz:13122"
-      "tcp://corn.chowder.land:9002"
       "tls://108.175.10.127:61216"
-      "tls://corn.chowder.land:443"
-      "tls://tasty.chowder.land:9001"
       "tcp://50.236.201.218:56088"
-      "tcp://ygg4.mk16.de:1337?key=0000147df8daa1cce2ad4b1d4b14c60a4c69a991b2dfde4e00ba7e95c36c530b"
-      "tcp://supergay.network:9002"
-      "tcp://cowboy.supergay.network:9111"
-      "tls://ygg4.mk16.de:1338?key=0000147df8daa1cce2ad4b1d4b14c60a4c69a991b2dfde4e00ba7e95c36c530b"
-      "tls://ygg4.mk16.de:443?key=0000147df8daa1cce2ad4b1d4b14c60a4c69a991b2dfde4e00ba7e95c36c530b"
-      "tcp://tasty.chowder.land:9002"
-      "tls://supergay.network:9001"
-      "tls://supergay.network:443"
       "tls://102.223.180.74:993"
-      "tls://cowboy.supergay.network:443"
       "tls://[2605:9f80:2000:64::2]:7040"
-      "tcp://lancis.iscute.moe:49273"
       "tls://167.160.89.98:7040"
-      "tcp://zabugor.itrus.su:7991"
-      "tls://lancis.iscute.moe:49274"
-      "tcp://ygg3.mk16.de:1337?key=000003acdaf2a60e8de2f63c3e63b7e911d02380934f09ee5c83acb758f470c1"
-      "tls://ygg3.mk16.de:1338?key=000003acdaf2a60e8de2f63c3e63b7e911d02380934f09ee5c83acb758f470c1"
     ];
   };
 }

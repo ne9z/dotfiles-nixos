@@ -97,7 +97,7 @@ in {
 
   environment.variables = {
     XKB_DEFAULT_LAYOUT = "${zfsRoot.myUser}";
-    EDITOR = "emacsclient --alternate-editor= --create-frame -nw";
+    EDITOR = "emacsclient --alternate-editor= --create-frame";
   };
 
   programs.sway = {
@@ -183,7 +183,7 @@ in {
     inTunnels = { };
   };
   environment.shellAliases = {
-    e = "emacsclient --alternate-editor= --create-frame -nw";
+    e = "emacsclient --alternate-editor= --create-frame";
     Nsu =
       "cp -r /home/${zfsRoot.myUser}/.config/nixos/ /etc&& nixos-rebuild switch --upgrade";
     Nbu =
@@ -242,7 +242,7 @@ in {
     "sr_mod"
     "sdhci_pci"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
   boot.extraModulePackages = [ ];
 

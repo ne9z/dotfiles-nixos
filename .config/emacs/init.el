@@ -20,7 +20,7 @@
  '(message-kill-buffer-on-exit t)
  '(message-send-mail-function 'message-send-mail-with-sendmail)
  '(message-sendmail-envelope-from 'header)
- '(notmuch-crypto-process-mime nil)
+ '(mml-secure-openpgp-sign-with-sender t)
  '(notmuch-saved-searches
    '((:name "inbox" :query "tag:inbox not tag:flagged not tag:passed" :key "i")
      (:name "unread" :query "tag:unread" :key "u")
@@ -30,6 +30,8 @@
      (:name "drafts" :query "tag:draft" :key "d")
      (:name "all mail" :query "*" :key "a")))
  '(org-latex-compiler "lualatex")
+ '(read-buffer-completion-ignore-case t)
+ '(read-file-name-completion-ignore-case t)
  '(reftex-plug-into-AUCTeX t)
  '(send-mail-function 'sendmail-send-it)
  '(sendmail-program "msmtp")
@@ -55,25 +57,13 @@
 (add-hook 'TeX-after-compilation-finished-functions
            #'TeX-revert-document-buffer)
 
-;; credit: yorickvP on Github
-(setq wl-copy-process nil)
-(defun wl-copy (text)
-  (setq wl-copy-process
-       (make-process
-        :name "wl-copy"
-         :buffer nil
-         :command '("wl-copy" "-f" "-n")
-         :connection-type 'pipe))
-  (process-send-string wl-copy-process text)
-  (process-send-eof wl-copy-process))
-(defun wl-paste ()
-  (if (and
-       wl-copy-process
-       (process-live-p wl-copy-process))
-      nil ; should return nil if we're the current paste owner
-    (shell-command-to-string "wl-paste -n | tr -d \r")))
-(setq interprogram-cut-function 'wl-copy)
-(setq interprogram-paste-function 'wl-paste)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:height 203)))))
+
 
 (defun dired-open-file ()
   "In dired, open the file named on this line."
@@ -84,22 +74,10 @@
 (eval-after-load "dired" '(progn
   (define-key dired-mode-map (kbd "C-o") 'dired-open-file)))
 
-(use-package notmuch
-  :config
-  (setq notmuch-always-prompt-for-sender t))
-
-(use-package magit)
-
 (use-package cdlatex
   :config
   (add-hook 'LaTeX-mode-hook #'turn-on-cdlatex)
   (add-hook 'latex-mode-hook #'turn-on-cdlatex))
-
-(use-package ace-window
-  :config
-  (setq aw-ignore-current t)
-  (setq aw-scope 'frame)
-  (global-set-key (kbd "C-M-y") 'ace-window))
 
 (use-package pyim-basedict
   :init
@@ -107,14 +85,21 @@
 
 (use-package pyim)
 
-(use-package swiper
+(use-package notmuch
   :config
-  (ivy-mode)
-  (avy-setup-default)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  (global-set-key (kbd "C-s") 'swiper)
-  (global-set-key (kbd "C-r") 'swiper-backward)
-  (global-set-key (kbd "<f6>") 'ivy-resume))
+  (setq notmuch-always-prompt-for-sender nil)
+  (setq notmuch-fcc-dirs "apvc.uk/Sent/")
+  (define-key notmuch-search-mode-map "d"
+	      (lambda (&optional beg end)
+		"mark message as passed"
+		(interactive (notmuch-interactive-region))
+		(notmuch-search-tag (list "+passed") beg end)
+		(notmuch-search-next-thread)))
+  (define-key notmuch-search-mode-map "f"
+	      (lambda (&optional beg end)
+		"mark message as flagged"
+		(interactive (notmuch-interactive-region))
+		(notmuch-search-tag (list "+flagged") beg end)
+		(notmuch-search-next-thread))))
 
-(use-package smartparens)
+(use-package magit)

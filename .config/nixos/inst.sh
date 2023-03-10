@@ -4,14 +4,16 @@ git clone https://github.com/ne9z/dotfiles-nixos.git
 mkdir dotfiles-nixos/Documents
 mkdir dotfiles-nixos/Downloads
 INST_PARTSIZE_SWAP=8
+
 diskNames=""
 for i in $DISK; do   diskNames="$diskNames \"${i##*/}\""; done
 tee -a dotfiles-nixos/.config/nixos/machine.nix <<EOF
 {
   bootDevices = [ $diskNames ];
+   hostName = "khingan";
 }
 EOF
-
+export POOLPASS="poolpass"
 for i in ${DISK}; do
 blkdiscard -f $i
 sync
@@ -73,7 +75,7 @@ zpool create \
       printf "$i-part3 ";
      done)
 
-echo poolpass | \
+echo ${POOLPASS} | \
     zfs create \
 	-o canmount=off \
 	-o mountpoint=none \

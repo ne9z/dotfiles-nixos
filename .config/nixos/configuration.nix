@@ -36,16 +36,27 @@ in {
       emacs
     ];
 
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  networking.domain = "lan";
+
   # List services that you want to enable:
   console.useXkbConfig = true;
   services.xserver.extraLayouts = {
     "${zfsRoot.myUser}" = {
       description = "${zfsRoot.myUser} layout.";
       languages = [ "eng" ];
-      symbolsFile = ./keymap/symbols;
+      symbolsFile = ./keymap/${zfsRoot.myUser}-symbols;
     };
   };
   services.xserver.layout = "${zfsRoot.myUser}";
+  networking.hostName = (import ./machine.nix).hostName;
 
   # Enable the OpenSSH daemon.
   virtualisation.libvirtd = {

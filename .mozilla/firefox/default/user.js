@@ -1,4 +1,6 @@
 // https://raw.githubusercontent.com/pyllyukko/user.js/master/user.js
+user_pref("toolkit.zoomManager.zoomValues", "1,1.7,2,2.3");
+user_pref("browser.urlbar.quicksuggest.enabled", false);
 user_pref("browser.backspace_action", 0);
 user_pref("browser.search.suggest.enabled",			false);
 user_pref("browser.urlbar.suggest.searches",			false);

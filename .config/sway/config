@@ -41,7 +41,7 @@ input "type:keyboard" {
     #nix-shell -p xorg.setxkbmap man xkeyboard-config
     #xkb_layout my-xkb-config(my-layout)
     #xkb_options ctrl:nocaps
-    xkb_file $HOME/.config/sway/keymap.xkb
+    xkb_file $HOME/.config/sway/$(whoami)-keymap.xkb
     # generate with xkbcomp $DISPLAY keymap.xkb
 }
 input "type:touchpad" {

@@ -24,3 +24,7 @@ doa ()
 {
     doas -s
 }
+
+if [ -f ~/.yc.sh ]; then
+    source ~/.yc.sh
+fi

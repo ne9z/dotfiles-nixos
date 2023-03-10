@@ -1,14 +1,5 @@
 { config, pkgs, ... }:
-let
-  myEmacs = (import ./emacs.nix { inherit pkgs; });
-  tex = (pkgs.texlive.combine {
-    inherit (pkgs.texlive)
-      scheme-medium dvisvgm dvipng # for preview and export as html
-      wrapfig amsmath ulem hyperref capt-of;
-    #(setq org-latex-compiler "lualatex")
-    #(setq org-preview-latex-default-process 'dvisvgm)
-  });
-in {
+{
   # DO NOT Let Home Manager install and manage itself.
   # this is done by system
   programs.home-manager.enable = false;
@@ -53,17 +44,7 @@ in {
       cursor-size = 48;
     };
   };
-  programs.emacs = {
-    enable = true;
-    package = myEmacs;
-  };
-  services.emacs = {
-    enable = true;
-    socketActivation.enable = true;
-    extraOptions = [ ];
-    client = {
       enable = true;
-      arguments = [ "--alternate-editor= --create-frame" ];
     };
   };
   programs = {

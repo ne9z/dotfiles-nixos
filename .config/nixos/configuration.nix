@@ -15,10 +15,22 @@ let
     "/dev/disk/by-id/"; # MUST have trailing slash! /dev/disk/by-id/
   zfsRoot.bootDevices = (import ./machine.nix).bootDevices;
   zfsRoot.mirroredEfi = "/boot/efis/";
-  zfsRoot.myUser = "user";
+  zfsRoot.myUser = "yc";
   myPass-store =
     pkgs.pass.withExtensions (exts: [ exts.pass-otp exts.pass-import ]);
-
+  mytex = (pkgs.texlive.combine {
+    inherit (pkgs.texlive)
+    # https://raw.githubusercontent.com/NixOS/nixpkgs/master/pkgs/tools/typesetting/tex/texlive/pkgs.nix
+      scheme-basic dvisvgm dvipng # for preview and export as html
+      latexmk wrapfig amsmath ulem collection-langgerman collection-mathscience
+      ### charter font and dependencies
+      charter xcharter xcharter-math mathdesign xkeyval ly1
+      ###
+      hyperref capt-of;
+    #(setq org-latex-compiler "lualatex")
+    #(setq org-preview-latex-default-process 'dvisvgm)
+  });
+  myemacs = (import ./emacs.nix { inherit pkgs; });
 in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -33,9 +45,14 @@ in {
       ## Do not forget to add an editor to edit configuration.nix!
       ## The Nano editor is also installed by default.
       #   wget
-      emacs
     ];
 
+  services.emacs = {
+    enable = true;
+    package = myemacs;
+    defaultEditor = false;
+    install = false;
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -382,11 +399,12 @@ in {
       tor-browser-bundle-bin
       wf-recorder
       qrencode
+      mytex
+      ghostscript # ghostscript for preview-latex in emacs
       xournalpp
       xdg-utils
       p7zip
       zip
-      texlive.combined.scheme-medium
       isync
       notmuch
       msmtp

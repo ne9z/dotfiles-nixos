@@ -13,4 +13,5 @@ in emacsWithPackages (epkgs:
     pyim-basedict
     notmuch
     magit
+    smartparens
   ]) ++ (with epkgs.elpaPackages; [ auctex ]) ++ [ ])

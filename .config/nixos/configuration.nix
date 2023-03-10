@@ -45,14 +45,9 @@ in {
       ## Do not forget to add an editor to edit configuration.nix!
       ## The Nano editor is also installed by default.
       #   wget
+      myemacs
     ];
 
-  services.emacs = {
-    enable = true;
-    package = myemacs;
-    defaultEditor = false;
-    install = false;
-  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

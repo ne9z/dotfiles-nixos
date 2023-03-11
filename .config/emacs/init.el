@@ -58,7 +58,7 @@
      ("margin=1.7cm" "geometry" nil)
      "\\let\\circledS\\undefined\\usepackage[bitstream-charter]{mathdesign}"
      ("" "amsthm" nil)))
- '(org-preview-latex-default-process 'dvisvgm)
+ '(org-preview-latex-default-process 'dvipng)
  '(read-buffer-completion-ignore-case t)
  '(read-file-name-completion-ignore-case t)
  '(reftex-plug-into-AUCTeX t)
@@ -80,9 +80,9 @@
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "M-n") #'org-next-link)
   (define-key org-mode-map (kbd "M-p") #'org-previous-link)
-  (define-key org-cdlatex-mode-map (kbd "$") 'cdlatex-dollar)
   (define-key org-cdlatex-mode-map (kbd "^") nil)
-  (define-key org-cdlatex-mode-map (kbd "_") nil))
+  (define-key org-cdlatex-mode-map (kbd "_") nil)
+  (add-to-list 'ispell-skip-region-alist '("#\\+begin_src". "#\\+end_src")))
 
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -147,4 +147,15 @@
   (smartparens-global-mode t)
   (eval-after-load 'cc-mode '(require 'smartparens-c))
   (eval-after-load 'org     '(require 'smartparens-org))
-  (eval-after-load 'latex   '(require 'smartparens-latex)))
+  (eval-after-load 'latex   '(require 'smartparens-latex))
+  ;; see https://github.com/Fuco1/smartparens/issues/1043
+  (sp-local-pair 'org-mode "_" nil :actions nil)
+  ;; latex inline math mode
+  (sp-local-pair 'org-mode "$" "$"))
+
+(use-package ace-window
+  :config
+  (global-set-key (kbd "C-M-y") 'ace-window)
+  (setq aw-keys '(?a ?r ?n ?t ?g ?e ?l ?o ?c ?b ?z ?y ?p))
+  (setq aw-scope 'frame)
+  (setq aw-ignore-current t))

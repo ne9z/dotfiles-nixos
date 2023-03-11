@@ -21,14 +21,19 @@ let
   mytex = (pkgs.texlive.combine {
     inherit (pkgs.texlive)
     # https://raw.githubusercontent.com/NixOS/nixpkgs/master/pkgs/tools/typesetting/tex/texlive/pkgs.nix
-      scheme-basic dvisvgm dvipng # for preview and export as html
-      latexmk wrapfig amsmath ulem collection-langgerman collection-mathscience
+    # packages strictly necessary for org-mode latex export
+    # see variable org-latex-default-packages-alist
+      scheme-basic dvisvgm dvipng latexmk wrapfig amsmath ulem hyperref capt-of
+      # mathematics
+      collection-langgerman collection-mathscience
       ### charter font and dependencies
       charter xcharter xcharter-math mathdesign xkeyval ly1
-      ###
-      hyperref capt-of;
-    #(setq org-latex-compiler "lualatex")
-    #(setq org-preview-latex-default-process 'dvisvgm)
+      ### dejavu font, used for monospace font
+      dejavu
+      ### pictures
+      collection-pictures
+      ### quotation marks
+      csquotes;
   });
   myemacs = (import ./emacs.nix { inherit pkgs; });
 in {
@@ -396,6 +401,11 @@ in {
       qrencode
       mytex
       ghostscript # ghostscript for preview-latex in emacs
+      # spell checker for emacs
+      enchant
+      nuspell
+      hunspellDicts.en_US
+      hunspellDicts.de_DE
       xournalpp
       xdg-utils
       p7zip

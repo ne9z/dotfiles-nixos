@@ -14,4 +14,4 @@ in emacsWithPackages (epkgs:
     notmuch
     magit
     smartparens
-  ]) ++ (with epkgs.elpaPackages; [ auctex ]) ++ [ ])
+  ]) ++ (with epkgs.elpaPackages; [ auctex ace-window ]) ++ [ ])
